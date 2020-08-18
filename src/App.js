@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { getAllNotes, deleteNote } from './api';
+import { getAllNotes, deleteNote, editNote } from './api';
 import { NoteList, NoteForm } from './components';
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -22,13 +22,19 @@ function App() {
     toast.success('Removed successfully')
   }
 
+  function handleEdit(e, id, newText) {
+    e.preventDefault();
+    editNote(id, newText).then(res => res)
+  }
+
   return (
     <div className="App">
       <ToastContainer autoClose={5000} limit={1} />
       <header className="App-container">
         <div className="notes-container">
         <NoteForm notes={notes} setNotes={setNotes} />
-        <NoteList 
+        <NoteList
+            onEdit={handleEdit} 
             onRemove={handleRemove} 
             data={notes}
           />
