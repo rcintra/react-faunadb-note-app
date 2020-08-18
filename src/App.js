@@ -4,7 +4,7 @@ import { getAllNotes, deleteNote } from './api';
 import { NoteList, NoteForm } from './components';
 
 import { ToastContainer, toast } from 'react-toastify';
-
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
@@ -24,7 +24,7 @@ function App() {
 
   return (
     <div className="App">
-      <ToastContainer />
+      <ToastContainer autoClose={5000} limit={1} />
       <header className="App-container">
         <div className="notes-container">
         <NoteForm notes={notes} setNotes={setNotes} />

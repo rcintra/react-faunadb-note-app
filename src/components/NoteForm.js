@@ -1,20 +1,21 @@
 import React from "react";
-import { Form, Button, Input } from "antd";
+import { Form, Input } from "antd";
 import { createNote } from "../api";
 import { toast } from "react-toastify";
 
-function NoteForm({notes, setNotes}) {
+function NoteForm({ notes, setNotes }) {
   const [form] = Form.useForm();
 
-  const onFinish = (values) => {    
-      createNote(values.note).then((res) => {          
-          const newNotesArray = notes.concat([res]);
-          setNotes(newNotesArray)
-          toast.success("Added Successfully");
-          form.resetFields();
+  const onFinish = (values) => {
+    createNote(values.note)
+      .then((res) => {
+        const newNotesArray = notes.concat([res]);
+        setNotes(newNotesArray);
+        toast.success("Added Successfully");
+        form.resetFields();
       })
       .catch((errorInfo) => {
-        console.log(errorInfo);
+        toast.error(errorInfo);
       });
   };
 
@@ -29,23 +30,21 @@ function NoteForm({notes, setNotes}) {
         form={form}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
-        style={{marginBottom: '25px'}} layout="horizontal"
+        style={{ marginBottom: "25px" }}
+        layout="horizontal"
       >
-        <Form.Item name="note" rules={[{ required: true }]}>
-          <Input
-            className="note-input"
-            size="large"
-            placeholder="Add New Note"
-          />
+        <Form.Item          
+          name="note"          
+          size="large"
+          placeholder="Add New Note"
+          rules={[{ required: true, message: "Por favor, incluir a nota!" }]}
+        >
+          <Input className="note-input" />
         </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Create
-          </Button>
-        </Form.Item>
+       
       </Form>
     </>
   );
-};
+}
 
 export default NoteForm;
